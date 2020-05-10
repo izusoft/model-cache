@@ -1,9 +1,8 @@
 {
     "name": "izusoft/modal-cache",
     "description": "",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "license": "MIT",
-    "version": "1.0",
     "authors": [
         {
             "name": "Igor Zubarev",
