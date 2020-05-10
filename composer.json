@@ -1,0 +1,48 @@
+{
+    "name": "izusoft/modal-cache",
+    "description": "",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Igor Zubarev",
+            "email": "zubarevski@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "laravel",
+        "cache",
+        "laravel-cache",
+        "model",
+        "model-cache",
+        "eloquent",
+        "eloquent-cache"
+    ],
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*",
+        "chelout/laravel-relationship-events": "^1.2.0",
+        "izusoft/log-message": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "src/Helpers/helpers.php"
+        ],
+        "psr-4": {
+            "IzuSoft\\ModalCache\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IzuSoft\\ModalCache\\ModalCacheServiceProvider"
+            ],
+            "aliases": {}
+        }
+    }
+}
