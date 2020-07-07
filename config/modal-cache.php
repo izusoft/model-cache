@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'prefix' => 'model-caching',
+    'store' => env('MODEL_CACHE_STORE', 'redis'),
+    'use-database-keying' => env('MODEL_CACHE_USE_DATABASE_KEYING', true),
+    'enabled_cache' => env('MODEL_CACHE_ENABLED', true),
+    'debug' => env('MODEL_CACHE_DEBUG', true),
     /*
     |--------------------------------------------------------------------------
     | Отключаются только методы remember и set

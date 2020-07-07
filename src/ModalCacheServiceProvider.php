@@ -77,18 +77,6 @@ class ModalCacheServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param string|null $tag
-     * @return bool
-     */
-    protected static function isModelCachable(string $tag = null): bool
-    {
-        $tag = '\\'.$tag;
-        $class = class_exists($tag, false) ? new $tag() : null;
-
-        return $class instanceof Model && method_exists($class, 'isCachableModel') && $class->isCachableModel();
-    }
-
-    /**
      * Register the application services.
      *
      * @return void
@@ -103,14 +91,12 @@ class ModalCacheServiceProvider extends ServiceProvider
             $configFile => config_path('modal-cache.php'),
         ], 'modal-cache');
 
-
-        //$this->app->extend('cache', static function ($cache, $app) {
-            //return new \CutCode\Cache\DecoratorCacheManager($app);
-        //});
-
-        //$this->app->bind('redisService', static function ($app, array $parameters = []) {
-            //return new \CutCode\Cache\RedisCacheService($parameters['type'] ?? 'cache');
-        //});
+        $this->app->singleton('modal-cache-helper', static function ($app) {
+            return new CacheHelper();
+        });
+        $this->app->singleton('modal-cache-service', static function ($app) {
+            return new ModelCacheService();
+        });
 
 
         // register commands
@@ -123,5 +109,17 @@ class ModalCacheServiceProvider extends ServiceProvider
     private function registerCommands(): void
     {
         //$this->commands(\CutCode\Cache\Commands\RedisClear::class);
+    }
+
+    /**
+     * @param string|null $tag
+     * @return bool
+     */
+    protected static function isModelCachable(string $tag = null): bool
+    {
+        $tag = '\\'.$tag;
+        $class = class_exists($tag, false) ? new $tag() : null;
+
+        return $class instanceof Model && method_exists($class, 'isCachableModel') && $class->isCachableModel();
     }
 }

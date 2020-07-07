@@ -3,37 +3,16 @@
 /* IzuSoft\ModalCache helpers function
 -------------------------------------------------------- */
 
-use Illuminate\Support\Collection;
+use IzuSoft\ModalCache\CacheHelper;
 
-
-if (! function_exists('cache_keys')) {
+if (! function_exists('modelTags')) {
     /**
-     * @param string $keyName
-     * @param array $replace
-     * @param string $configName
-     * @return \Illuminate\Config\Repository|mixed
+     * @param array|string|null $classes
+     * @return array
      */
-    function cache_keys(string $keyName, array $replace = [], string $configName = 'cache-keys')
+    function modelTags($classes)
     {
-        $keyString = config($configName.'.'.$keyName, '');
-
-        if (empty($replace)) {
-            return $keyString;
-        }
-
-        $replace = (new Collection($replace))->sortBy(static function ($value, $key) {
-            return mb_strlen($key) * -1;
-        })->all();
-
-        foreach ($replace as $key => $value) {
-            $keyString = str_replace(
-                ['{' . $key . '}', '{' . \Str::upper($key) . '}', '{' . \Str::ucfirst($key) . '}'],
-                [$value, \Str::upper($value), \Str::ucfirst($value)],
-                $keyString
-            );
-        }
-
-        return $keyString;
+        return app(CacheHelper::class)->getCacheTagsByClass($classes);
     }
 }
 
